@@ -1,13 +1,17 @@
+# if __name__ == "__main__":
+#     print(1)
+#     pass
+
 num1 = input("Введите первое число: ")
 num2 = input("Введите второе число: ")
+
 operation = input("Введите операция над числом(+, -, *, /): ")
 
 num1 = float(num1)
 num2 = float(num2)
 
 
-def calc():
-    global num3
+def calc(num1, num2):
     if operation == "+":
         num3 = num1 + num2
     elif operation == "-":
@@ -34,9 +38,9 @@ def change_operation():
 
 
 def change_num2():
-    global num2
     num2 = input("Введите число неравное 0: ")
     num2 = float(num2)
+    return num2
 
 
 """"
@@ -58,7 +62,7 @@ if voice == 1:
     print("Результат: ", num3)
 elif voice == 2:
     print("Запись выполнена!")
-    with open("/Users/arsenikatsuba/Desktop/study/calca/output.txt", "w") as file:
+    with open("/task1/output.txt", "w") as file:
         file.write(str(num3))
 else:
     print("Ошибка")
