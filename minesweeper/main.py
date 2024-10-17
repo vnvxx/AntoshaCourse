@@ -115,7 +115,7 @@ def play(dim_size=10, num_bombs=10):
 
     while len(board.dug) < board.dim_size ** 2 - num_bombs:
         print(board)
-        user_input = re.split(',(\\s)*', input("Куда ты ходишь? Пиши строчку и столбик: "))
+        user_input = re.split(',(\\s)*', input("Куда ты ходишь? Пиши строчку и столбик, через запятую(Пример: 5,5): "))
         row, col = int(user_input[0]), int(user_input[-1])
         if row < 0 or row >= board.dim_size or col < 0 or col >= dim_size:
             print("Неверный ввод. Попробуй снова")
