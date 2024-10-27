@@ -1,5 +1,6 @@
 import random
 import re
+import itertools
 
 
 class Board:
@@ -7,10 +8,11 @@ class Board:
         self.dim_size = dim_size
         self.num_bombs = num_bombs
 
+        self.dug = set()
+
+    def boardcheck(self):
         self.board = self.make_new_board()
         self.assign_values_to_board()
-
-        self.dug = set()
 
     def make_new_board(self):
         board = [[None for _ in range(self.dim_size)] for _ in range(self.dim_size)]
@@ -30,16 +32,19 @@ class Board:
         return board
 
     def assign_values_to_board(self):
-        for r in range(self.dim_size):
-            for c in range(self.dim_size):
+        for r, c in itertools.product(range(self.dim_size), repeat=2):
+        # for r in range(self.dim_size):
+        #     for c in range(self.dim_size):
                 if self.board[r][c] == '*':
                     continue
                 self.board[r][c] = self.get_num_neighboring_bombs(r, c)
 
     def get_num_neighboring_bombs(self, row, col):
         num_neighboring_bombs = 0
-        for r in range(max(0, row-1), min(self.dim_size-1, row+1)+1):
-            for c in range(max(0, col-1), min(self.dim_size-1, col+1)+1):
+        for r, c in itertools.product(range(row-1, row+2), range(col-1, col+2)):
+        # for r in range(max(0, row-1), min(self.dim_size-1, row+1)+1):
+        #     for c in range(max(0, col-1), min(self.dim_size-1, col+1)+1):
+            if 0 <= r < self.dim_size and 0 <= c < self.dim_size:  #нужен для проверки границ поля доски, как я понял мин и макс заменяет
                 if r == row and c == col:
                     continue
                 if self.board[r][c] == '*':
@@ -111,6 +116,7 @@ class Board:
 
 def play(dim_size=10, num_bombs=10):
     board = Board(dim_size, num_bombs)
+    board.boardcheck()
     safe = True
 
     while len(board.dug) < board.dim_size ** 2 - num_bombs:
